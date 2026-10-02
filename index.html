@@ -67,6 +67,7 @@
     @media (pointer:coarse) and (orientation:portrait) { body.game-active .rotate-prompt { display:grid; } }
     .overlay { position:absolute; inset:0; z-index:5; display:grid; place-items:center; padding:20px; background:rgba(4,7,20,.58); backdrop-filter:blur(3px); transition:opacity .25s; }
     .overlay.hidden { opacity:0; pointer-events:none; }
+    #overlay:not(.hidden) { grid-template-columns:minmax(0,440px) minmax(220px,280px); gap:22px; align-content:center; justify-content:center; }
     .level-flash { position:absolute; top:27%; left:50%; z-index:2; opacity:0; transform:translate(-50%,-15px) scale(.82); color:var(--yellow); text-align:center; pointer-events:none; text-shadow:0 0 18px rgba(255,209,102,.9); }
     .level-flash.show { animation:levelUp 1.2s ease-out both; }
     .level-flash small { display:block; color:var(--cyan); font-size:11px; letter-spacing:4px; }
@@ -114,7 +115,8 @@
     .tip { margin-top:17px !important; font-size:11px !important; letter-spacing:1px; }
     footer { position:absolute; right:28px; bottom:18px; left:28px; z-index:3; display:flex; justify-content:space-between; color:var(--muted); font-size:11px; letter-spacing:1px; text-shadow:0 1px 8px #030510; pointer-events:none; }
     kbd { padding:3px 6px; border:1px solid #44516c; color:var(--ink); background:#101a30; }
-    @media (max-width:760px) { #overlay:not(.hidden) { grid-template-columns:minmax(0,440px); gap:12px; align-content:start; overflow-y:auto; } .leaderboard-panel { padding:10px; } }
+    @media (max-width:760px) { #overlay:not(.hidden) { grid-template-columns:minmax(0,1.5fr) minmax(180px,1fr); gap:12px; align-content:center; justify-content:center; overflow-y:auto; } .card { padding:22px 16px; } .leaderboard-panel { padding:10px; } }
+    @media (max-width:560px) { #overlay:not(.hidden) { grid-template-columns:minmax(0,440px); gap:12px; align-content:start; } }
     @media (max-width:650px) { .shell { padding:0; gap:0; } header { align-items:flex-start; padding:14px 16px; } .brand { gap:10px; } .brand-mark { width:32px; height:32px; font-size:15px; } h1 { font-size:18px; letter-spacing:5px; } .tag { max-width:190px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:9px; letter-spacing:2px; } .status { font-size:9px; } .hud { top:78px; left:12px; width:calc(100% - 24px); grid-template-columns:1fr 1fr; gap:6px; } .metric { padding:7px 9px; } .metric strong { font-size:18px; } .metric label { font-size:9px; letter-spacing:1px; } .energy-bar { width:85px; } footer { right:14px; bottom:12px; left:14px; font-size:8px; } footer span:last-child { display:none; } .card { padding:24px 18px; } }
     @media (pointer:coarse) and (orientation:landscape) { .shell { padding:0; gap:0; } header { align-items:center; padding:8px 14px; } .tag { display:none; } .hud { top:52px; left:12px; width:calc(100% - 24px); grid-template-columns:repeat(5,minmax(0,1fr)); gap:5px; } .metric { padding:5px 7px; } .metric strong { margin-top:1px; font-size:15px; } .metric label { font-size:8px; letter-spacing:.5px; } .energy-bar { width:56px; height:3px; margin-top:4px; } footer { right:12px; bottom:7px; left:12px; font-size:8px; } }
     @media (pointer:coarse) and (orientation:portrait) {
@@ -123,9 +125,9 @@
       header { position:relative; top:auto; right:auto; left:auto; flex:none; padding:14px 18px; background:linear-gradient(180deg,rgba(3,5,16,.8),rgba(3,5,16,0)); }
     }
     @media (pointer:coarse) and (orientation:landscape) and (max-height:500px) {
-      #overlay:not(.hidden) { grid-template-columns:minmax(0,420px); gap:6px; align-content:start; overflow-y:auto; padding:8px 12px; }
-      #leaderboardPanel { display:none; }
+      #overlay:not(.hidden) { grid-template-columns:minmax(0,1.5fr) minmax(160px,1fr); gap:6px; align-content:start; overflow-y:auto; padding:8px 12px; }
       .card { padding:12px 14px; }
+      .leaderboard-panel { padding:8px; }
       .card h2 { margin:5px 0; font-size:28px; letter-spacing:3px; }
       .card p { margin:4px 0 6px; font-size:12px; line-height:1.3; }
       .player-name-row { display:grid; grid-template-columns:78px 1fr; align-items:center; gap:8px; margin:6px 0; }
@@ -169,7 +171,7 @@
       <div class="metric"><label>Energía · <span id="weaponLevel">Mk I</span></label><div class="energy-bar"><span id="energyFill"></span></div><small id="upgradeStatus">SIN MEJORAS</small></div>
       <div class="metric"><label>Vida de la nave</label><div class="energy-bar"><span id="healthFill"></span></div><small id="healthText">100 / 100</small></div>
     </section>
-    <main id="arena"><canvas id="game"></canvas><div class="touch-controls" id="touchControls"><div class="touch-stick" data-stick="move" aria-label="Joystick de movimiento"><span>MOVER</span><i class="touch-knob"></i></div><div class="touch-stick" data-stick="aim" aria-label="Joystick de apuntado y disparo"><span>APUNTAR</span><i class="touch-knob"></i></div></div><button class="touch-pause" id="touchPause" type="button" aria-label="Pausar partida" title="Pausar partida">Ⅱ</button><div class="boss-hud" id="bossHud"><div class="boss-label"><span>GUARDIÁN DEL SECTOR</span><span id="bossLevel">NIVEL 5</span></div><div class="boss-track"><span id="bossFill"></span></div></div><div class="level-flash" id="levelFlash"><small>NUEVO SECTOR</small><strong id="levelFlashText">NIVEL 2</strong></div><div class="overlay hidden" id="skillOverlay"><div class="skill-card"><div class="eyebrow">NUEVA HABILIDAD</div><h2>ELIGE TU PRÓXIMA VENTAJA</h2><p>La partida está pausada hasta que selecciones una habilidad.</p><div class="skill-options" id="skillOptions"></div></div></div><div class="overlay" id="overlay"><div class="card"><div class="eyebrow">PROTOCOLO // 07</div><h2 id="title">NEON DRIFT</h2><p id="message">Atraviesa la tormenta de datos, recoge energía y sobrevive todo lo que puedas.</p><div class="player-name-row"><label for="playerName">Tu nombre</label><input id="playerName" maxlength="12" value="JUGADOR" placeholder="Escribe tu nombre" /></div><div class="choose-row"><button class="mode-btn active" type="button" data-mode="arcade">ARCADA</button><button class="mode-btn" type="button" data-mode="infinite">INFINITO</button></div><div class="choose-row"><button class="skin-btn active" type="button" data-skin="neon"><span class="skin-swatch" style="background:#7efde8"></span>NEÓN</button><button class="skin-btn" type="button" data-skin="crimson"><span class="skin-swatch" style="background:#ff4f9a"></span>CRIMSON</button><button class="skin-btn" type="button" data-skin="gold"><span class="skin-swatch" style="background:#ffd166"></span>GOLD</button></div><button id="start">Iniciar misión</button><p class="tip">Mueve la nave con <kbd>WASD</kbd> · Dispara con <kbd>ESPACIO</kbd> · Pulsa <kbd>P</kbd> para pausar</p></div><div class="leaderboard-panel" id="leaderboardPanel"><h3>TOP PUNTUACIONES</h3><p class="leaderboard-status" id="leaderboardStatus">Solo en este dispositivo</p><ol class="leaderboard-list" id="leaderboardList"></ol></div></div></main>
+    <main id="arena"><canvas id="game"></canvas><div class="touch-controls" id="touchControls"><div class="touch-stick" data-stick="move" aria-label="Joystick de movimiento"><span>MOVER</span><i class="touch-knob"></i></div><div class="touch-stick" data-stick="aim" aria-label="Joystick de apuntado y disparo"><span>APUNTAR</span><i class="touch-knob"></i></div></div><button class="touch-pause" id="touchPause" type="button" aria-label="Pausar partida" title="Pausar partida">Ⅱ</button><div class="boss-hud" id="bossHud"><div class="boss-label"><span>GUARDIÁN DEL SECTOR</span><span id="bossLevel">NIVEL 5</span></div><div class="boss-track"><span id="bossFill"></span></div></div><div class="level-flash" id="levelFlash"><small>NUEVO SECTOR</small><strong id="levelFlashText">NIVEL 2</strong></div><div class="overlay hidden" id="skillOverlay"><div class="skill-card"><div class="eyebrow">NUEVA HABILIDAD</div><h2>ELIGE TU PRÓXIMA VENTAJA</h2><p>La partida está pausada hasta que selecciones una habilidad.</p><div class="skill-options" id="skillOptions"></div></div></div><div class="overlay" id="overlay"><div class="card"><div class="eyebrow">PROTOCOLO // 07</div><h2 id="title">NEON DRIFT</h2><p id="message">Atraviesa la tormenta de datos, recoge energía y sobrevive todo lo que puedas.</p><div class="player-name-row"><label for="playerName">Tu nombre</label><input id="playerName" maxlength="12" value="JUGADOR" placeholder="Escribe tu nombre" /></div><div class="choose-row"><button class="mode-btn active" type="button" data-mode="arcade">ARCADA</button><button class="mode-btn" type="button" data-mode="infinite">INFINITO</button></div><div class="choose-row"><button class="skin-btn active" type="button" data-skin="neon"><span class="skin-swatch" style="background:#7efde8"></span>NEÓN</button><button class="skin-btn" type="button" data-skin="crimson"><span class="skin-swatch" style="background:#ff4f9a"></span>CRIMSON</button><button class="skin-btn" type="button" data-skin="gold"><span class="skin-swatch" style="background:#ffd166"></span>GOLD</button></div><button id="start">Iniciar misión</button><p class="tip">Mueve la nave con <kbd>WASD</kbd> · Dispara con <kbd>ESPACIO</kbd> · Pulsa <kbd>P</kbd> para pausar</p></div><div class="leaderboard-panel" id="leaderboardPanel"><h3>TOP GLOBAL</h3><p class="leaderboard-status" id="leaderboardStatus">Cargando puntuaciones...</p><ol class="leaderboard-list" id="leaderboardList"></ol></div></div></main>
     <footer><span id="sectorText">SECTOR 09 · 2088</span><span id="missionText">MISIÓN: SOBREVIVE Y DESTRUYE</span></footer>
   </div>
   <div class="rotate-prompt" id="rotatePrompt" role="status"><div><span aria-hidden="true">↻</span><strong>GIRA EL TELÉFONO</strong><small>Juega con el teléfono en horizontal.</small></div></div>
@@ -183,6 +185,9 @@
     const missionText = document.getElementById('missionText'), sectorText = document.getElementById('sectorText');
     let width, height, dpr, aimX = 0, aimY = 0, last = 0, hudClock = 0, running = false, paused = false, choosingSkill = false, score = 0, combo = 1, level = 1, energy = 100, health = 100, missionKills = 0, nextEnergyBonus = 500, spawnClock = 0, pickupClock = 0, fireClock = 0, turretClock = 0, enemyFireClock = 0, bossShotClock = 0, explosiveClock = 0, bossStage = 0, screenShake = 0, best = Number(localStorage.getItem('neonDriftBest') || 0), gameMode = 'arcade', selectedSkin = 'neon', timeSlowTimer = 0, doubleShotTimer = 0, dangerPulse = 0, survivalTime = 0;
     const leaderboardStorageKey = 'neonDriftLeaderboard';
+    const SUPABASE_URL = 'https://gscztyuermkyfquvnzqp.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_13LNSl6VkN-ojh9-4XWvQw_LBqyr7VR';
+    let globalLeaderboardLoaded = false;
     playerNameInput.value = localStorage.getItem('neonDriftPlayerName') || 'JUGADOR';
     let leaderboard = [];
     const shipPalettes = { neon:{trail:'#7efde8', core:'#cffffd', wing:'#7feef2', glow:'#7efde8'}, crimson:{trail:'#ff4f9a', core:'#ffd5e8', wing:'#ff8ac1', glow:'#ff4f9a'}, gold:{trail:'#ffd166', core:'#fff0b5', wing:'#ffcf70', glow:'#ffd166'} };
@@ -204,34 +209,73 @@
           .map(entry => ({ name: entry.name.slice(0, 12), score: Math.max(0, Math.floor(Number(entry.score))) }))
           .sort((a, b) => b.score - a.score)
           .slice(0, 8);
-        leaderboardStatus.textContent = 'Solo en este dispositivo';
       } catch (error) {
         leaderboard = [];
-        leaderboardStatus.textContent = 'No se pudo leer la tabla guardada en este dispositivo.';
+        console.error('No se pudo leer la tabla local.', error);
       }
       renderLeaderboard();
-    }
-    function renderLeaderboard() {
-      leaderboardList.innerHTML = leaderboard.length
-        ? leaderboard.map((entry, index) => '<li class="leaderboard-entry"><span class="rank">#' + (index + 1) + '</span><span class="name">' + escapeHtml(entry.name) + '</span><span class="pts">' + String(entry.score).padStart(6, '0') + '</span></li>').join('')
-        : '<li class="leaderboard-entry empty">Sin puntuaciones todavía</li>';
     }
     function saveLeaderboardScore() {
       const name = (playerNameInput.value || '').trim().replace(/\s+/g, ' ').slice(0, 12) || 'JUGADOR';
       playerNameInput.value = name;
       localStorage.setItem('neonDriftPlayerName', name);
-      loadLeaderboard();
-      const previous = leaderboard.find(entry => entry.name.toUpperCase() === name.toUpperCase());
+      const raw = localStorage.getItem(leaderboardStorageKey);
+      const localEntries = raw ? JSON.parse(raw) : [];
+      const previous = localEntries.find(entry => entry.name.toUpperCase() === name.toUpperCase());
       if (previous && previous.score >= Math.floor(score)) return;
-      leaderboard = leaderboard.filter(entry => entry.name.toUpperCase() !== name.toUpperCase());
-      leaderboard.push({ name, score: Math.floor(score) });
-      leaderboard.sort((a, b) => b.score - a.score);
-      leaderboard = leaderboard.slice(0, 8);
+      const updated = localEntries.filter(entry => entry.name.toUpperCase() !== name.toUpperCase());
+      updated.push({ name, score: Math.floor(score) });
+      updated.sort((a, b) => b.score - a.score);
+      leaderboard = updated.slice(0, 8);
       try {
         localStorage.setItem(leaderboardStorageKey, JSON.stringify(leaderboard));
-        leaderboardStatus.textContent = 'Solo en este dispositivo';
       } catch (error) {
-        leaderboardStatus.textContent = 'No se pudo guardar la puntuación en este dispositivo.';
+        console.error('No se pudo guardar la puntuación local.', error);
+      }
+      renderLeaderboard();
+    }
+    function renderLeaderboard() {
+      leaderboardList.innerHTML = leaderboard.length
+        ? leaderboard.map((entry, index) => '<li class="leaderboard-entry"><span class="rank">#' + (index + 1) + '</span><span class="name">' + escapeHtml(entry.player_name || entry.name || 'JUGADOR') + '</span><span class="pts">' + String(Math.floor(Number(entry.score) || 0)).padStart(6, '0') + '</span></li>').join('')
+        : '<li class="leaderboard-entry empty">Sin puntuaciones todavía</li>';
+    }
+    function supabaseHeaders(extra = {}) {
+      const headers = { apikey: SUPABASE_ANON_KEY, 'Content-Type': 'application/json', ...extra };
+      if (SUPABASE_ANON_KEY.startsWith('eyJ')) headers.Authorization = 'Bearer ' + SUPABASE_ANON_KEY;
+      return headers;
+    }
+    async function loadGlobalLeaderboard() {
+      try {
+        const response = await fetch(SUPABASE_URL + '/rest/v1/leaderboard?select=player_name,score&order=score.desc&limit=8', { headers: supabaseHeaders() });
+        if (!response.ok) throw new Error('Leaderboard request failed: ' + response.status);
+        const rows = await response.json();
+        leaderboard = Array.isArray(rows) ? rows : [];
+        globalLeaderboardLoaded = true;
+        leaderboardStatus.textContent = 'Ranking global · sincronizado';
+        renderLeaderboard();
+      } catch (error) {
+        globalLeaderboardLoaded = false;
+        leaderboardStatus.textContent = 'No se pudo conectar al TOP global; mostrando puntuaciones de este dispositivo.';
+        console.error('No se pudo cargar el TOP global.', error);
+        loadLeaderboard();
+      }
+    }
+    async function registerGlobalScore() {
+      const name = (playerNameInput.value || '').trim().replace(/\s+/g, ' ').slice(0, 12) || 'JUGADOR';
+      const currentScore = Math.floor(Number(score) || 0);
+      if (currentScore <= 0 || !globalLeaderboardLoaded) return;
+      if (leaderboard.length >= 8 && currentScore <= Number(leaderboard[leaderboard.length - 1].score)) return;
+      try {
+        const response = await fetch(SUPABASE_URL + '/functions/v1/submit-score', {
+          method: 'POST',
+          headers: supabaseHeaders({ Prefer: 'return=minimal' }),
+          body: JSON.stringify({ player_name: name, score: currentScore })
+        });
+        if (!response.ok) throw new Error('Score submission failed: ' + response.status);
+        await loadGlobalLeaderboard();
+      } catch (error) {
+        leaderboardStatus.textContent = 'No se pudo guardar en el TOP global; la puntuación quedó en este dispositivo.';
+        console.error('No se pudo enviar la puntuación global.', error);
       }
       renderLeaderboard();
     }
@@ -276,7 +320,7 @@
     ];
     function offerSkills() { let availableSkills=skillPool.filter(skill=>skill.id==='wingman'?upgrades.turret<3:skill.id==='companionWeapon'?upgrades.turret>0&&upgrades.companionWeapon<2:true);let choices=[...availableSkills].sort(()=>Math.random()-.5).slice(0,3); skillOptions.innerHTML=choices.map((skill,index)=>'<button class="skill-option '+skill.rarity+'" data-skill="'+skill.id+'"><span class="rarity">'+skill.label+'</span><strong>'+skill.name+'</strong><small>'+skill.desc+'</small></button>').join(''); choosingSkill=true; paused=true; skillOverlay.classList.remove('hidden'); }
     function chooseSkill(id) { let skill=skillPool.find(item=>item.id===id); if(!skill)return; if(id==='wingman')recruitCompanion();if(id==='companionWeapon')upgrades.companionWeapon=Math.min(2,upgrades.companionWeapon+1);if(id==='explosive')upgrades.explosive=Math.min(3,upgrades.explosive+1);if(id==='vitality'){upgrades.maxEnergy=Math.min(180,upgrades.maxEnergy+25);energy=Math.min(upgrades.maxEnergy,energy+35);}if(id==='aegis')upgrades.shield=Math.min(6,upgrades.shield+2);if(id==='orbit')upgrades.orbit=Math.min(3,upgrades.orbit+1);if(id==='overdrive'){upgrades.fireRate=Math.min(8,upgrades.fireRate+2);player.speed+=35;}if(id==='repair')upgrades.regen=Math.min(5,upgrades.regen+1);if(id==='nova'){upgrades.explosive=Math.min(5,upgrades.explosive+2);upgrades.power=Math.min(8,upgrades.power+2);}if(id==='piercing')upgrades.piercing=Math.min(3,upgrades.piercing+1);if(id==='magnet')upgrades.magnet=Math.min(4,upgrades.magnet+1);if(id==='score'){upgrades.scoreBoost=Math.min(4,upgrades.scoreBoost+1);nextEnergyBonus=Math.max(score+150,nextEnergyBonus-150);} choosingSkill=false;paused=false;skillOverlay.classList.add('hidden');statusText.textContent=skill.name+' adquirida';updateHud(true);sound('pickup'); }
-    function endGame() { running=false; paused=false; combo=1; updateHud(true); sound('boom'); screenShake=.18; deathExplosion={x:player.x,y:player.y,started:performance.now(),particles:Array.from({length:18},()=>{let angle=Math.random()*Math.PI*2,speed=Math.random()*150+55;return {x:0,y:0,vx:Math.cos(angle)*speed,vy:Math.sin(angle)*speed,size:Math.random()*2.5+1.5,color:Math.random()<.5?'#ffd166':'#ff4f9a'};})}; burst(player.x,player.y,'#ff4f9a',24); for(let i=0;i<2;i++) burst(player.x,player.y,'#ffd166',10); if(score>best){best=Math.floor(score);localStorage.setItem('neonDriftBest',best);bestEl.textContent=String(best).padStart(6,'0');} saveLeaderboardScore(); title.textContent='NAVE DESTRUIDA'; message.textContent='Impacto crítico. Has reunido '+Math.floor(score)+' puntos. Reinicia el nivel y vuelve a intentarlo.'; start.textContent='Reiniciar nivel'; overlay.classList.remove('hidden'); statusText.textContent='explosión detectada'; }
+    function endGame() { running=false; paused=false; combo=1; updateHud(true); sound('boom'); screenShake=.18; deathExplosion={x:player.x,y:player.y,started:performance.now(),particles:Array.from({length:18},()=>{let angle=Math.random()*Math.PI*2,speed=Math.random()*150+55;return {x:0,y:0,vx:Math.cos(angle)*speed,vy:Math.sin(angle)*speed,size:Math.random()*2.5+1.5,color:Math.random()<.5?'#ffd166':'#ff4f9a'};})}; burst(player.x,player.y,'#ff4f9a',24); for(let i=0;i<2;i++) burst(player.x,player.y,'#ffd166',10); if(score>best){best=Math.floor(score);localStorage.setItem('neonDriftBest',best);bestEl.textContent=String(best).padStart(6,'0');} saveLeaderboardScore(); registerGlobalScore(); title.textContent='NAVE DESTRUIDA'; message.textContent='Impacto crítico. Has reunido '+Math.floor(score)+' puntos. Reinicia el nivel y vuelve a intentarlo.'; start.textContent='Reiniciar nivel'; overlay.classList.remove('hidden'); statusText.textContent='explosión detectada'; }
     function hazardShapeForLevel() { if(level<=2)return 'asteroid'; if(level<=4)return 'triangle'; if(level<=6)return 'diamond'; if(level<=8)return 'hexagon'; return 'star'; }
     function scenarioForLevel() { return ['NEÓN','ASTEROIDES','SECTOR ABANDONADO','DIMENSIÓN OSCURA'][Math.min(3,Math.floor((level-1)/3))]; }
     function spawnHazard() { if(hazards.length>=Math.min(12,4+level*1.1))return; let r=Math.random()*10+13, side=Math.floor(Math.random()*4), x, y, vx, vy, speed=Math.min(330,Math.random()*70+145+level*16), type=level<3?'basic':Math.random()<Math.min(.16,.04+level*.012)?'fast':level>=5&&Math.random()<Math.min(.16,.04+level*.01)?'chaser':level>=8&&Math.random()<Math.min(.12,.025+level*.008)?'mine':'basic'; if(type==='fast')speed*=1.25;if(type==='chaser')speed*=.78;if(type==='mine')speed*=.55; if(side===0){x=Math.random()*width;y=-r;vx=0;vy=speed;}else if(side===1){x=width+r;y=Math.random()*height;vx=-speed;vy=0;}else if(side===2){x=Math.random()*width;y=height+r;vx=0;vy=-speed;}else{x=-r;y=Math.random()*height;vx=speed;vy=0;} hazards.push({x,y,r,type,v:speed,vx,vy,rot:Math.random()*6.2,spin:(Math.random()-.5)*4,shape:hazardShapeForLevel(),hp:type==='mine'?levelData.objectHp+1:levelData.objectHp,maxHp:type==='mine'?levelData.objectHp+1:levelData.objectHp,shoot:type!=='mine'&&Math.random()<Math.min(.36,.08+level*.02),shootClock:Math.random()}); }
@@ -339,6 +383,10 @@
     playerNameInput.addEventListener('change', () => { playerNameInput.value = (playerNameInput.value || '').trim().replace(/\s+/g, ' ').slice(0, 12) || 'JUGADOR'; localStorage.setItem('neonDriftPlayerName', playerNameInput.value); });
     overlay.append(leaderboardPanel);
     loadLeaderboard();
+    loadGlobalLeaderboard();
+    window.setInterval(() => {
+      if (!overlay.classList.contains('hidden')) loadGlobalLeaderboard();
+    }, 30000);
     window.addEventListener('keydown',e=>{keys[e.key]=true;keys[e.code]=true;if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Space'].includes(e.code))e.preventDefault();if(e.key.toLowerCase()==='p'&&running&&!choosingSkill){paused=!paused;statusText.textContent=paused?'misión pausada':'misión activa';}});window.addEventListener('keyup',e=>{keys[e.key]=false;keys[e.code]=false;if(e.code==='Space'&&running&&!choosingSkill){combo=1;updateHud();statusText.textContent='combo reiniciado';}});start.addEventListener('click',()=>window.startGame());skillOptions.addEventListener('click',e=>{let button=e.target.closest('[data-skill]');if(button)chooseSkill(button.dataset.skill);});
     const activeTouchSticks = new Map();
     function updateTouchStick(event) {
